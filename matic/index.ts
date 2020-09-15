@@ -32,7 +32,7 @@ const addresses: {
 
 export function getDomainData(network: string) {
   const domainData: any = {
-    name: network == 'mainnet' ? 'Decentraland MANA' : 'Dummy ERC20',
+    name: network == 'mainnet' ? '(PoS) Decentraland MANA' : 'Dummy ERC20',
     version: '1',
     verifyingContract: addresses[network].l2Token
   }
