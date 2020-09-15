@@ -212,7 +212,7 @@ export async function sendMana(
           log(v, 'v')
           log(fromAddress, 'userAddress')
 
-          await fetch('http://localhost:3000/', {
+          await fetch('https://l2.dcl.guru/', {
             headers: {
               'content-type': 'application/json'
             },
