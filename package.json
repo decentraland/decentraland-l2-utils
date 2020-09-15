@@ -1,0 +1,38 @@
+{
+  "name": "@dcl/l2-utils",
+  "version": "0.0.0-development",
+  "description": "A collection of helpers to make it easier to build a Decentraland scene using the SDK.",
+  "main": "index.ts",
+  "scripts": {
+    "semantic-release": "semantic-release"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/decentraland/decentraland-l2-utils.git"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "singleQuote": true,
+    "semi": false
+  },
+  "keywords": [],
+  "author": "Decentraland",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/decentraland/decentraland-l2-utils/issues"
+  },
+  "homepage": "https://github.com/decentraland/decentraland-l2-utils#readme",
+  "devDependencies": {
+    "prettier": "^1.19.1",
+    "semantic-release": "^16.0.1",
+    "typescript": "^3.9.3"
+  },
+  "dependencies": {
+    "decentraland-ecs": "^6.4.10",
+    "decentraland-ecs-utils": "^1.1.4",
+    "eth-connect": "^4.0.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
