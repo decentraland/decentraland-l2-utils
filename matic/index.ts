@@ -116,7 +116,6 @@ export async function depositMana(amount: number, network: string = 'mainnet') {
         from: fromAddress
       }
     )
-    log(txId)
     let receipt = null
     while (receipt == null) {
       await delay(2000)
@@ -188,9 +187,6 @@ export async function sendMana(
         message: message
       })
 
-      log('dataToSign:')
-      log(dataToSign)
-
       metamaskRM.provider.sendAsync(
         {
           method: 'eth_signTypedData_v4',
@@ -200,17 +196,13 @@ export async function sendMana(
         } as RPCSendableMessage,
         async (err: any, result: any) => {
           if (err) {
+            reject(err)
             return error(err)
           }
-          log(result.result)
           const signature = result.result.substring(2)
           const r = '0x' + signature.substring(0, 64)
           const s = '0x' + signature.substring(64, 128)
           const v = '0x' + signature.substring(128, 130)
-          log(r, 'r')
-          log(s, 's')
-          log(v, 'v')
-          log(fromAddress, 'userAddress')
 
           await fetch('https://l2.dcl.guru/', {
             headers: {
@@ -232,6 +224,8 @@ export async function sendMana(
                 receipt = await requestManager.eth_getTransactionReceipt(txId.toString())
               }
               resolve({ receipt, txId })
+            }).catch((e)=>{
+              reject(e)
             })
         }
       )
