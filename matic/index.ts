@@ -109,17 +109,45 @@ export async function depositMana(amount: number, network: string = 'mainnet') {
   if (+ethEsm.fromWei(balance.toString(), 'ether') < amount) return 'Balance too low'
   const allowance = await contract.allowance(fromAddress, addresses[network].ERC20Predicate)
   if (+allowance < +ethEsm.toWei(amount, 'ether')) {
-    const txId = await contract.approve(
-      addresses[network].ERC20Predicate,
-      +ethEsm.toWei(amount, 'ether'),
-      {
-        from: fromAddress
+    if (+allowance == 0) {
+      const txId = await contract.approve(
+        addresses[network].ERC20Predicate,
+        +ethEsm.toWei(amount, 'ether'),
+        {
+          from: fromAddress
+        }
+      )
+      let receipt = null
+      while (receipt == null) {
+        await delay(2000)
+        receipt = await requestManager.eth_getTransactionReceipt(txId.toString())
       }
-    )
-    let receipt = null
-    while (receipt == null) {
-      await delay(2000)
-      receipt = await requestManager.eth_getTransactionReceipt(txId.toString())
+    }
+    else {
+      const txId1 = await contract.approve(
+        addresses[network].ERC20Predicate,
+        0,
+        {
+          from: fromAddress
+        }
+      )
+      let receipt1 = null
+      while (receipt1 == null) {
+        await delay(1000)
+        receipt1 = await requestManager.eth_getTransactionReceipt(txId1.toString())
+      }
+      const txId2 = await contract.approve(
+        addresses[network].ERC20Predicate,
+        +ethEsm.toWei(amount, 'ether'),
+        {
+          from: fromAddress
+        }
+      )
+      let receipt2 = null
+      while (receipt2 == null) {
+        await delay(1000)
+        receipt2 = await requestManager.eth_getTransactionReceipt(txId2.toString())
+      }
     }
   }
 
@@ -224,7 +252,7 @@ export async function sendMana(
                 receipt = await requestManager.eth_getTransactionReceipt(txId.toString())
               }
               resolve({ receipt, txId })
-            }).catch((e)=>{
+            }).catch((e) => {
               reject(e)
             })
         }
