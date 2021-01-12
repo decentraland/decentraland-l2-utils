@@ -1,5 +1,4 @@
 import { getUserAccount, RPCSendableMessage } from '@decentraland/EthereumController'
-import * as ethEsm from 'eth-connect/esm'
 import * as eth from 'eth-connect/eth-connect'
 import RootChainManagerAbi from './RootChainManagerAbi'
 import { RootChainManager } from './RootChainManager'
@@ -69,9 +68,9 @@ export async function getContract(
 ) {
   if (!requestManager) {
     const provider = await getProvider()
-    requestManager = new ethEsm.RequestManager(provider)
+    requestManager = new eth.RequestManager(provider)
   }
-  const factory = new ethEsm.ContractFactory(requestManager, abi)
+  const factory = new eth.ContractFactory(requestManager, abi)
   const contract = (await factory.at(contractAddress)) as ERC20Matic
   return { contract, requestManager }
 }
@@ -82,18 +81,18 @@ export async function balance(address?: string, network: string = 'mainnet') {
   return Promise.all([
     getContract(addresses[network].l1Token).then(async ({ contract }) => {
       const balance = await contract.balanceOf(fromAddress)
-      return +ethEsm.fromWei(balance.toString(), 'ether')
+      return +eth.fromWei(balance.toString(), 'ether')
     }),
     getContract(
       addresses[network].l2Token,
-      new ethEsm.RequestManager(
+      new eth.RequestManager(
         network == 'mainnet'
-          ? new ethEsm.WebSocketProvider('wss://ws-mainnet.matic.network')
-          : new ethEsm.WebSocketProvider('wss://ws-mumbai.matic.today')
+          ? new eth.WebSocketProvider('wss://ws-mainnet.matic.network')
+          : new eth.WebSocketProvider('wss://ws-mumbai.matic.today')
       )
     ).then(async ({ contract }) => {
       const balance = await contract.balanceOf(fromAddress)
-      return +ethEsm.fromWei(balance.toString(), 'ether')
+      return +eth.fromWei(balance.toString(), 'ether')
     })
   ]).then(v => {
     return { l1: v[0], l2: v[1] }
@@ -106,13 +105,13 @@ export async function depositMana(amount: number, network: string = 'mainnet') {
   const { contract, requestManager } = await getContract(addresses[network].l1Token)
 
   const balance = await contract.balanceOf(fromAddress)
-  if (+ethEsm.fromWei(balance.toString(), 'ether') < amount) return 'Balance too low'
+  if (+eth.fromWei(balance.toString(), 'ether') < amount) return 'Balance too low'
   const allowance = await contract.allowance(fromAddress, addresses[network].ERC20Predicate)
-  if (+allowance < +ethEsm.toWei(amount, 'ether')) {
+  if (+allowance < +eth.toWei(amount, 'ether')) {
     if (+allowance == 0) {
       const txId = await contract.approve(
         addresses[network].ERC20Predicate,
-        +ethEsm.toWei(amount, 'ether'),
+        +eth.toWei(amount, 'ether'),
         {
           from: fromAddress
         }
@@ -120,25 +119,20 @@ export async function depositMana(amount: number, network: string = 'mainnet') {
       let receipt = null
       while (receipt == null) {
         await delay(2000)
-        receipt = await requestManager.eth_getTransactionReceipt(txId.toString())
+        receipt = await requestManager?.eth_getTransactionReceipt(txId.toString())
       }
-    }
-    else {
-      const txId1 = await contract.approve(
-        addresses[network].ERC20Predicate,
-        0,
-        {
-          from: fromAddress
-        }
-      )
+    } else {
+      const txId1 = await contract.approve(addresses[network].ERC20Predicate, 0, {
+        from: fromAddress
+      })
       let receipt1 = null
       while (receipt1 == null) {
         await delay(1000)
-        receipt1 = await requestManager.eth_getTransactionReceipt(txId1.toString())
+        receipt1 = await requestManager?.eth_getTransactionReceipt(txId1.toString())
       }
       const txId2 = await contract.approve(
         addresses[network].ERC20Predicate,
-        +ethEsm.toWei(amount, 'ether'),
+        +eth.toWei(amount, 'ether'),
         {
           from: fromAddress
         }
@@ -146,18 +140,18 @@ export async function depositMana(amount: number, network: string = 'mainnet') {
       let receipt2 = null
       while (receipt2 == null) {
         await delay(1000)
-        receipt2 = await requestManager.eth_getTransactionReceipt(txId2.toString())
+        receipt2 = await requestManager?.eth_getTransactionReceipt(txId2.toString())
       }
     }
   }
 
-  const factory = new ethEsm.ContractFactory(requestManager, RootChainManagerAbi)
+  const factory = new eth.ContractFactory(requestManager, RootChainManagerAbi)
   const maticContract = (await factory.at(addresses[network].RootChainManager)) as RootChainManager
 
   await maticContract.depositFor(
     fromAddress,
     addresses[network].l1Token,
-    '0x' + padding((+ethEsm.toWei(amount, 'ether')).toString(16), false),
+    '0x' + padding((+eth.toWei(amount, 'ether')).toString(16), false),
     { from: fromAddress }
   )
 }
@@ -172,18 +166,18 @@ export async function sendMana(
     const fromAddress = await getUserAccount()
 
     const provider = await getProvider()
-    const metamaskRM = new ethEsm.RequestManager(provider)
+    const metamaskRM = new eth.RequestManager(provider)
 
     await getContract(
       addresses[network].l2Token,
-      new ethEsm.RequestManager(
+      new eth.RequestManager(
         network == 'mainnet'
-          ? new ethEsm.WebSocketProvider('wss://ws-mainnet.matic.network')
-          : new ethEsm.WebSocketProvider('wss://ws-mumbai.matic.today')
+          ? new eth.WebSocketProvider('wss://ws-mainnet.matic.network')
+          : new eth.WebSocketProvider('wss://ws-mumbai.matic.today')
       )
     ).then(async ({ contract, requestManager }) => {
       const balance = await contract.balanceOf(fromAddress)
-      if (+ethEsm.fromWei(balance.toString(), 'ether') < amount) return 'balance too low'
+      if (+eth.fromWei(balance.toString(), 'ether') < amount) return 'balance too low'
 
       const [domainData, domainType] = getDomainData(network)
 
@@ -195,7 +189,7 @@ export async function sendMana(
 
       const functionSignature = `0xa9059cbb000000000000000000000000${to
         .toLowerCase()
-        .replace('0x', '')}${padding((+ethEsm.toWei(amount, 'ether')).toString(16), false)}`
+        .replace('0x', '')}${padding((+eth.toWei(amount, 'ether')).toString(16), false)}`
 
       let nonce = await contract.getNonce(fromAddress)
 
@@ -249,10 +243,11 @@ export async function sendMana(
               let receipt = null
               while (receipt == null) {
                 await delay(500)
-                receipt = await requestManager.eth_getTransactionReceipt(txId.toString())
+                receipt = await requestManager?.eth_getTransactionReceipt(txId.toString())
               }
               resolve({ receipt, txId })
-            }).catch((e) => {
+            })
+            .catch(e => {
               reject(e)
             })
         }

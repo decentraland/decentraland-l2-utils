@@ -1,5 +1,5 @@
 import { TransactionObject, BlockType, EstimateGasOptions } from '../utils/types'
-import * as ethEsm from 'eth-connect/esm'
+import * as eth from 'eth-connect'
 
 interface EventOptions {
   filter?: object
@@ -7,7 +7,7 @@ interface EventOptions {
   topics?: string[]
 }
 
-export class RootChainManager extends ethEsm.Contract {
+export class RootChainManager extends eth.Contract {
   constructor(jsonInterface: any[], address?: string, options?: any)
   clone(): RootChainManager
   DEFAULT_ADMIN_ROLE(): TransactionObject<string>
