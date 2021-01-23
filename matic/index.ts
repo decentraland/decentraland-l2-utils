@@ -159,7 +159,6 @@ export async function depositMana(amount: number, network: string = 'mainnet') {
 export async function sendMana(
   to: string,
   amount: number,
-  waitUntilConfirm: boolean,
   network: string = 'mainnet'
 ) {
   return new Promise(async (resolve, reject) => {
