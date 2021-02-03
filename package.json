@@ -1,8 +1,10 @@
 {
-  "name": "@dcl/l2-utils",
+  "name": "@dcl/l2-scene-utils",
   "version": "0.0.0-development",
   "description": "A collection of helpers to make it easier to build a Decentraland scene using the SDK.",
-  "main": "index.ts",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "decentralandLibrary": {},
   "scripts": {
     "semantic-release": "semantic-release",
     "build": "rollup -c --environment BUILD:production"
@@ -41,5 +43,8 @@
   },
   "bundleDependencies": [
     "eth-connect"
+  ],
+  "files": [
+    "dist"
   ]
 }
