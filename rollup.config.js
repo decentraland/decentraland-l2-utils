@@ -30,14 +30,15 @@ export default {
   input: './src/index.ts',
   context: 'globalThis',
   plugins,
+  external: /@decentraland\//,
   output: [
     {
       file: './dist/index.js',
-      format: 'umd',
-      name: 'l2-utils',
+      format: 'amd',
+      name: '@dcl/l2-scene-utils',
       sourcemap: true,
       amd: {
-        id: 'l2-utils'
+        id: '@dcl/l2-scene-utils'
       }
     }
   ]
