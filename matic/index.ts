@@ -22,8 +22,8 @@ const addresses: {
     RootChainManager: '0xA0c68C638235ee32657e8f720a23ceC1bFc77C77'
   },
   goerli: {
-    l1Token: '0x655F2166b0709cd575202630952D71E2bB0d61Af',
-    l2Token: '0xfe4F5145f6e09952a5ba9e956ED0C25e3Fa4c7F1',
+    l1Token: '0xe7fDae84ACaba2A5Ba817B6E6D8A2d415DBFEdbe',
+    l2Token: '0x882Da5967c435eA5cC6b09150d55E8304B838f45',
     ERC20Predicate: '0xdD6596F2029e6233DEFfaCa316e6A95217d4Dc34',
     RootChainManager: '0xBbD7cBFA79faee899Eaf900F13C9065bF03B1A74'
   }
