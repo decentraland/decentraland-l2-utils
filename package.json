@@ -1,10 +1,14 @@
 {
-  "name": "@dcl/l2-utils",
+  "name": "@dcl/l2-scene-utils",
   "version": "0.0.0-development",
   "description": "A collection of helpers to make it easier to build a Decentraland scene using the SDK.",
-  "main": "index.ts",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "decentralandLibrary": {},
   "scripts": {
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "build": "rollup -c --environment BUILD:production",
+    "build-ecs": "build-ecs"
   },
   "repository": {
     "type": "git",
@@ -23,19 +27,28 @@
   },
   "homepage": "https://github.com/decentraland/decentraland-l2-utils#readme",
   "devDependencies": {
+    "decentraland-ecs": "^6.6.4-20210211141055.commit-849ee51",
     "prettier": "^2.2.1",
-    "semantic-release": "^17.3.7",
-    "typescript": "^4.1.3"
-  },
-  "dependencies": {
-    "decentraland-ecs": "^6.6.3",
-    "decentraland-ecs-utils": "^1.5.2",
-    "eth-connect": "^5.0.0"
+    "rollup": "^2.38.5",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.29.0",
+    "semantic-release": "^17.3.8",
+    "typescript": "^4.1.5"
   },
   "publishConfig": {
     "access": "public"
   },
   "bundleDependencies": [
-    "eth-connect"
-  ]
+    "eth-connect",
+    "@dcl/ecs-scene-utils"
+  ],
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@dcl/ecs-scene-utils": "^1.6.2-20210209214601.commit-f2019e1",
+    "eth-connect": "^5.0.0"
+  }
 }

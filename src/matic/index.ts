@@ -1,5 +1,5 @@
 import { getUserAccount, RPCSendableMessage } from '@decentraland/EthereumController'
-import * as eth from 'eth-connect/eth-connect'
+import * as eth from 'eth-connect'
 import RootChainManagerAbi from './RootChainManagerAbi'
 import { RootChainManager } from './RootChainManager'
 import { getProvider } from '@decentraland/web3-provider'
