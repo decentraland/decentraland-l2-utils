@@ -15,21 +15,23 @@ To use any of the helpers provided by the utils library
 1. Install it as an `npm` package. Run this command in your scene's project folder:
 
 ```
-npm i @dcl/l2-utils@latest -B
+npm i @dcl/l2-scene-utils @dcl/ecs-scene-utils eth-connect -B
 ```
+
+Note: This command also installs the latest version of the @dcl/ecs-scene-utils and eth-connect libraries, that are dependencies of the l2 utils library
 
 2. Run `dcl start` or `dcl build` so the dependencies are correctly installed.
 
 3. Import the library into the scene's script. Add this line at the start of your `game.ts` file, or any other TypeScript files that require it:
 
 ```ts
-import * as layerTwo from 'l2-utils'
+import * as layerTwo from '@dcl/l2-scene-utils'
 ```
 
 If you'll only be using part of this library in your scene, we recommend instead only importing the specific relevant subfolder/s. For example:
 
 ```ts
-import * as matic from 'l2-utils/matic'
+import { matic } from '@dcl/l2-scene-utils'
 ```
 
 4. In your TypeScript file, write `layerTwo.` and let the suggestions of your IDE show the available helpers.
@@ -51,7 +53,7 @@ matic.balance(`0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`)
 For example, your scene can have a button that requests players to make a MANA payment to the scene cretor's personal wallet. The button opens a door, but only once a transaction is sent to pay the fee.
 
 ```ts
-import * as matic from '../node_modules/@dcl/l2-utils/matic/index'
+import { matic } from '@dcl/l2-scene-utils'
 
 (...)
 
@@ -79,7 +81,7 @@ matic.sendMana(`0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`, 100)
 For example, your scene can have a button that requests players to make a MANA payment to the scene cretor's personal wallet. The button opens a door, but only once a transaction is sent to pay the fee.
 
 ```ts
-import * as matic from '../node_modules/@dcl/l2-utils/matic/index'
+import { matic } from '@dcl/l2-scene-utils'
 
 (...)
 
