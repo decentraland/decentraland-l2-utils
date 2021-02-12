@@ -1,4 +1,4 @@
-import { Delay } from '../../../decentraland-ecs-utils/timer/component/delay'
+import { Delay } from '@dcl/ecs-scene-utils'
 
 export function delay(ms: number): Promise<undefined> {
   return new Promise((resolve, reject) => {
