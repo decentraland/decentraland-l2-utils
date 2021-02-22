@@ -1,4 +1,4 @@
-interface EstimateGasOptions {
+export interface EstimateGasOptions {
   from?: string
   gas?: number
   value?: number | string
