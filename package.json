@@ -8,7 +8,8 @@
   "scripts": {
     "semantic-release": "semantic-release",
     "build": "rollup -c --environment BUILD:production",
-    "build-ecs": "build-ecs"
+    "build-ecs": "build-ecs",
+	"link": "npm link && rollup --watch -c --environment BUILD:production"
   },
   "repository": {
     "type": "git",
