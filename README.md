@@ -106,7 +106,7 @@ Once that transaction is confirmed on the Matic network, the door opens.
 In order to test changes made to this repository in active scenes, do the following:
 
 1. Run `npm run link` on this repository
-2. On the scene directory, after you installed the dependency, run `npm link @dcl/ui-scene-utils`
+2. On the scene directory, after you installed the dependency, run `npm link @dcl/l2-scene-utils`
 
 
 ## CI/CD
