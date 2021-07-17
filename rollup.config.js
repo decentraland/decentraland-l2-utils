@@ -30,7 +30,7 @@ export default {
   input: './src/index.ts',
   context: 'globalThis',
   plugins,
-  external: /(@decentraland\/|@dcl\/|eth-connect)/,
+  external: /(@decentraland\/|@dcl\/|eth-connect|decentraland-transactions)/,
   output: [
     {
       file: './dist/index.js',

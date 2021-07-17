@@ -7,7 +7,7 @@
     "allowJs": true,
     "paths": {
       "eth-connect": ["./node_modules/eth-connect/eth-connect.d.ts"],
-      "@dcl/ecs-scene-utils": ["./node_modules/@dcl/ecs-scene-utils/dist/index.d.ts"]
+      "decentraland-transactions": ["./node_modules/decentraland-transactions/decentraland-transactions.d.ts"],
     }
   },
   "include": ["src/**/*.ts"],
