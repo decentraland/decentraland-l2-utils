@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/decentraland/decentraland-l2-utils#readme",
   "devDependencies": {
-    "decentraland-ecs": "^6.6.5",
+    "decentraland-ecs": "latest",
     "prettier": "^2.3.2",
     "rollup": "^2.53.2",
     "rollup-plugin-commonjs": "^10.1.0",
