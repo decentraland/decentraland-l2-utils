@@ -6,7 +6,7 @@ import { createMANAComponent } from './mana'
 export async function createComponents() {
     const provider = await getProvider()
     const requestManager: any = new eth.RequestManager(provider)
-    const metaProvider: any = new eth.WebSocketProvider('wss://rpc-mainnet.matic.quiknode.pro')
+    const metaProvider: any = new eth.HTTPProvider('https://polygon-rpc.com')
     const fromAddress = await getUserAccount()
     const metaRequestManager: any = new eth.RequestManager(metaProvider)
     const providers = {
