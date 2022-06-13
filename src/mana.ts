@@ -8,8 +8,8 @@ export type Providers = {
 }
 
 export interface IMANAComponents {
-  balance: () => Promise<any>
-  isApproved: (spenderAddress: string) => Promise<number>
+  balance: (from?: string) => Promise<any>
+  isApproved: (spenderAddress: string, from?: string) => Promise<number>
   approve: (spenderAddress: string, amount?: number) => Promise<string>
   transfer: (to: string, amount: number) => Promise<string>
   //depositMana: (amount: number) => Promise<string>
