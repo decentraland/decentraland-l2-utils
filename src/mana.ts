@@ -32,16 +32,16 @@ export function createMANAComponent({
     }
   }
 
-  async function balance() {
+  async function balance(from?: string) {
     const { manaConfig, contract } = await getContract()
-    const res = await contract.balanceOf(fromAddress)
+    const res = await contract.balanceOf(from || fromAddress)
 
     return res
   }
 
-  async function isApproved(spenderAddress: string) {
+  async function isApproved(spenderAddress: string, from?: string) {
     const { manaConfig, contract } = await getContract()
-    const res = await contract.allowance(fromAddress, spenderAddress)
+    const res = await contract.allowance(from || fromAddress, spenderAddress)
 
     return +res
   }
