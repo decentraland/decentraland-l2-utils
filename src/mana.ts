@@ -8,10 +8,10 @@ export type Providers = {
 }
 
 export interface IMANAComponents {
-  balance: (from?: string) => Promise<any>
-  isApproved: (spenderAddress: string, from?: string) => Promise<number>
-  approve: (spenderAddress: string, amount?: number) => Promise<string>
-  transfer: (to: string, amount: number) => Promise<string>
+  balance: (from?: string) => Promise<string>
+  allowance: (spenderAddress: string, from?: string) => Promise<string>
+  approve: (spenderAddress: string, amount?: eth.BigNumber) => Promise<string>
+  transfer: (to: string, amount: eth.BigNumber) => Promise<string>
   //depositMana: (amount: number) => Promise<string>
 }
 
@@ -39,19 +39,19 @@ export function createMANAComponent({
     return res
   }
 
-  async function isApproved(spenderAddress: string, from?: string) {
+  async function allowance(spenderAddress: string, from?: string) {
     const { manaConfig, contract } = await getContract()
     const res = await contract.allowance(from || fromAddress, spenderAddress)
 
-    return +res
+    return res
   }
 
-  async function approve(spenderAddress: string, amount: number = 0) {
+  async function approve(spenderAddress: string, amount?: eth.BigNumber) {
     const { manaConfig, contract } = await getContract()
 
     const functionHex = contract.approve.toPayload(
       spenderAddress,
-      amount == 0 ? '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff' : amount
+      amount || '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
     )
 
     const txHash = await dclTx.sendMetaTransaction(
@@ -63,7 +63,7 @@ export function createMANAComponent({
     )
     return txHash
   }
-  async function transfer(to: string, amount: number) {
+  async function transfer(to: string, amount: eth.BigNumber) {
     const { manaConfig, contract } = await getContract()
 
     const functionHex = contract.transferFrom.toPayload(fromAddress, to, amount)
@@ -77,5 +77,5 @@ export function createMANAComponent({
     )
     return txHash
   }
-  return { transfer, balance, isApproved, approve }
+  return { transfer, balance, allowance, approve }
 }
