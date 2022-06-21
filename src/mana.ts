@@ -66,7 +66,7 @@ export function createMANAComponent({
   async function transfer(to: string, amount: eth.BigNumber) {
     const { manaConfig, contract } = await getContract()
 
-    const functionHex = contract.transferFrom.toPayload(fromAddress, to, amount)
+    const functionHex = contract.transfer.toPayload(to, amount)
 
     const txHash = await dclTx.sendMetaTransaction(
       requestManager as any,
