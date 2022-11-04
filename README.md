@@ -42,9 +42,9 @@ As MANA is Decentraland's main currency, this library provies tools to make it e
 
 ### Get balance of an address
 
-To make players in your scene send MANA to a specific address, use the `sendMana()` function. This function requires the following arguments:
+To get the current MANA balance of a specific address, use the `balance()` function. This function requires the following arguments:
 
-- `address`: What ethereum address to send the MANA to
+- `address`: What ethereum address to get the MANA balance
 
 ```ts
 matic.balance(`0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`)
