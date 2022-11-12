@@ -75,7 +75,14 @@ export async function getContract(
   return { contract, requestManager }
 }
 
-export async function balance(address?: string, network: string = 'mainnet') {
+export async function balance(
+  address?: string,
+  network: string = 'mainnet',
+  providerType: string = 'WebSocketProvider',
+  providerEndpoint: string = 'wss://rpc-mainnet.matic.network',
+  testnetProviderType: string = 'WebSocketProvider',
+  testnetProviderEndpoint: string = 'wss://rpc-mumbai.matic.today'
+) {
   const fromAddress = address || (await getUserAccount())
 
   return Promise.all([
@@ -87,8 +94,8 @@ export async function balance(address?: string, network: string = 'mainnet') {
       addresses[network].l2Token,
       new eth.RequestManager(
         network == 'mainnet'
-          ? new eth.WebSocketProvider('wss://ws-mainnet.matic.network')
-          : new eth.WebSocketProvider('wss://ws-mumbai.matic.today')
+          ? new eth[providerType](providerEndpoint)
+          : new eth[testnetProviderType](testnetProviderEndpoint)
       )
     ).then(async ({ contract }) => {
       const balance = await contract.balanceOf(fromAddress)
@@ -159,7 +166,11 @@ export async function depositMana(amount: number, network: string = 'mainnet') {
 export async function sendMana(
   to: string,
   amount: number,
-  network: string = 'mainnet'
+  network: string = 'mainnet',
+  providerType: string = 'WebSocketProvider',
+  providerEndpoint: string = 'wss://rpc-mainnet.matic.network',
+  testnetProviderType: string = 'WebSocketProvider',
+  testnetProviderEndpoint: string = 'wss://rpc-mumbai.matic.today'
 ) {
   return new Promise(async (resolve, reject) => {
     const fromAddress = await getUserAccount()
@@ -171,8 +182,8 @@ export async function sendMana(
       addresses[network].l2Token,
       new eth.RequestManager(
         network == 'mainnet'
-          ? new eth.WebSocketProvider('wss://ws-mainnet.matic.network')
-          : new eth.WebSocketProvider('wss://ws-mumbai.matic.today')
+        ? new eth[providerType](providerEndpoint)
+        : new eth[testnetProviderType](testnetProviderEndpoint)
       )
     ).then(async ({ contract, requestManager }) => {
       const balance = await contract.balanceOf(fromAddress)
