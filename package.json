@@ -1,6 +1,6 @@
 {
   "name": "@dcl/l2-scene-utils",
-  "version": "0.0.0-development",
+  "version": "1.0.7-fix-provider-endpoints",
   "description": "A collection of helpers to make it easier to build a Decentraland scene using the SDK.",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
@@ -8,7 +8,8 @@
   "scripts": {
     "semantic-release": "semantic-release",
     "build": "rollup -c --environment BUILD:production",
-    "build-ecs": "build-ecs"
+    "build-ecs": "build-ecs",
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
