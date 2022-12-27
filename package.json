@@ -7,7 +7,7 @@
   "decentralandLibrary": {},
   "scripts": {
     "semantic-release": "semantic-release",
-    "build": "rollup -c --environment BUILD:production",
+    "build": "rollup -c --environment BUILD:production --bundleConfigAsCjs",
     "build-ecs": "build-ecs"
   },
   "repository": {
