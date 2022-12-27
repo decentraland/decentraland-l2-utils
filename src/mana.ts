@@ -12,7 +12,6 @@ export interface IMANAComponents {
   allowance: (spenderAddress: string, from?: string) => Promise<string>
   approve: (spenderAddress: string, amount?: eth.BigNumber) => Promise<string>
   transfer: (to: string, amount: eth.BigNumber) => Promise<string>
-  //depositMana: (amount: number) => Promise<string>
 }
 
 export function createMANAComponent({
