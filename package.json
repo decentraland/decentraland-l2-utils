@@ -7,7 +7,7 @@
   "decentralandLibrary": {},
   "scripts": {
     "semantic-release": "semantic-release",
-    "build": "rollup -c --environment BUILD:production",
+    "build": "rollup -c --environment BUILD:production --bundleConfigAsCjs",
     "build-ecs": "build-ecs"
   },
   "repository": {
@@ -28,14 +28,14 @@
   "homepage": "https://github.com/decentraland/decentraland-l2-utils#readme",
   "devDependencies": {
     "decentraland-ecs": "latest",
-    "prettier": "^2.3.2",
-    "rollup": "^2.53.2",
+    "prettier": "^2.8.1",
+    "rollup": "^3.8.1",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-terser": "^7.0.2",
-    "rollup-plugin-typescript2": "^0.30.0",
-    "semantic-release": "^17.4.4",
-    "typescript": "^4.3.5"
+    "rollup-plugin-typescript2": "^0.34.1",
+    "semantic-release": "^19.0.5",
+    "typescript": "^4.9.4"
   },
   "publishConfig": {
     "access": "public"
@@ -48,7 +48,7 @@
     "dist"
   ],
   "dependencies": {
-    "decentraland-transactions": "^1.22.2",
-    "eth-connect": "^6.0.0"
+    "decentraland-transactions": "^1.42.0",
+    "eth-connect": "^6.0.3"
   }
 }
