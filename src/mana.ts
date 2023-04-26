@@ -16,8 +16,8 @@ export type Options = {
 export interface IMANAComponents {
   balance: (from?: string) => Promise<string>
   allowance: (spenderAddress: string, from?: string) => Promise<string>
-  approve: (spenderAddress: string, amount?: eth.BigNumber) => Promise<string>
-  transfer: (to: string, amount: eth.BigNumber) => Promise<string>
+  approve: (spenderAddress: string, amount?: eth.BigNumber, options?: Options) => Promise<string>
+  transfer: (to: string, amount: eth.BigNumber, options?: Options) => Promise<string>
   //depositMana: (amount: number) => Promise<string>
 }
 
