@@ -1,17 +1,24 @@
 import * as eth from 'eth-connect'
 import * as dclTx from 'decentraland-transactions'
 
+const defaultServerURL = 'https://transactions-api.decentraland.org/v1'
+
 export type Providers = {
   requestManager: eth.RequestManager
   metaRequestManager: eth.RequestManager
   fromAddress: string
 }
 
+export type Options = {
+  serverURL: string
+}
+
 export interface IMANAComponents {
   balance: (from?: string) => Promise<string>
   allowance: (spenderAddress: string, from?: string) => Promise<string>
-  approve: (spenderAddress: string, amount?: eth.BigNumber) => Promise<string>
-  transfer: (to: string, amount: eth.BigNumber) => Promise<string>
+  approve: (spenderAddress: string, amount?: eth.BigNumber, options?: Options) => Promise<string>
+  transfer: (to: string, amount: eth.BigNumber, options?: Options) => Promise<string>
+  //depositMana: (amount: number) => Promise<string>
 }
 
 export function createMANAComponent({
@@ -45,8 +52,11 @@ export function createMANAComponent({
     return res
   }
 
-  async function approve(spenderAddress: string, amount?: eth.BigNumber) {
+  async function approve(spenderAddress: string, amount?: eth.BigNumber, options?: Options) {
     const { manaConfig, contract } = await getContract()
+
+    options = options || { serverURL: defaultServerURL }
+    options.serverURL = options.serverURL || defaultServerURL
 
     const functionHex = contract.approve.toPayload(
       spenderAddress,
@@ -58,12 +68,15 @@ export function createMANAComponent({
       metaRequestManager as any,
       functionHex.data,
       manaConfig,
-      { serverURL: 'https://transactions-api.decentraland.org/v1' }
+      { serverURL: options.serverURL }
     )
     return txHash
   }
-  async function transfer(to: string, amount: eth.BigNumber) {
+  async function transfer(to: string, amount: eth.BigNumber, options?: Options) {
     const { manaConfig, contract } = await getContract()
+
+    options = options || { serverURL: defaultServerURL }
+    options.serverURL = options.serverURL || defaultServerURL
 
     const functionHex = contract.transfer.toPayload(to, amount)
 
@@ -72,7 +85,7 @@ export function createMANAComponent({
       metaRequestManager as any,
       functionHex.data,
       manaConfig,
-      { serverURL: 'https://transactions-api.decentraland.org/v1' }
+      { serverURL: options.serverURL }
     )
     return txHash
   }
